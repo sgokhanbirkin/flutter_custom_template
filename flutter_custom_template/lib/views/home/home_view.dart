@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_template/theme/theme.dart';
 import 'package:flutter_custom_template/utils/paddings.dart';
 import 'package:flutter_custom_template/views/home/widgets/bigCard.dart';
+import 'package:flutter_custom_template/widgets/smart_widgets/arrow_card_widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'home_view_model.dart';
@@ -41,23 +42,30 @@ class _HomeViewState extends State<HomeView> {
                   SliverAppBar(
                     pinned: true,
                     stretch: true,
-                    expandedHeight: MediaQuery.of(context).size.height * 0.5,
+                    expandedHeight: MediaQuery.of(context).size.height * 0.45,
                     flexibleSpace: LayoutBuilder(
                       builder: (context, constraints) {
                         top = constraints.biggest.height;
 
                         return FlexibleSpaceBar(
-                          background: customAppBar(context),
+                          background: customAppBar(context, size),
+                          centerTitle: true,
                           title: AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
                             opacity: top < 200 ? 1 : 0,
                             child: Row(
                               children: const [
-                                Text('Flutter',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'),
+                                ),
+                                SizedBox(
+                                  width: 18,
+                                ),
+                                Text("Dorata"),
                               ],
                             ),
                           ),
@@ -66,11 +74,19 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: Column(
+                    child: ListView(
+                      //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('My Courses',
-                            style:
-                                ThemeYellow().yellowTheme.textTheme.headline4),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                          ),
+                          child: Text('My Courses',
+                              style: ThemeYellow()
+                                  .yellowTheme
+                                  .textTheme
+                                  .headline4),
+                        ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -93,9 +109,14 @@ class _HomeViewState extends State<HomeView> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text('My Favourites',
-                            style:
-                                ThemeYellow().yellowTheme.textTheme.headline4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                          child: Text('My Favourites',
+                              style: ThemeYellow()
+                                  .yellowTheme
+                                  .textTheme
+                                  .headline4),
+                        ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -144,7 +165,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Stack customAppBar(BuildContext context) {
+  Stack customAppBar(BuildContext context, Size size) {
     return Stack(
       children: [
         bg(context),
@@ -155,7 +176,7 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Padding(
                 padding: const EdgeInsets.all(MainPadding.defaultPaddingLow),
                 child: Text('Hello Dorata!',
@@ -168,7 +189,7 @@ class _HomeViewState extends State<HomeView> {
                   style: ThemeYellow().yellowTheme.textTheme.headline2,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GestureDetector(
@@ -178,7 +199,7 @@ class _HomeViewState extends State<HomeView> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+                      color: Colors.white70,
                     ),
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
@@ -189,10 +210,11 @@ class _HomeViewState extends State<HomeView> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.02,
                           ),
-                          Icon(
-                            FontAwesome.youtube_play,
-                            color: Colors.lightBlueAccent.shade400,
-                            size: 50,
+                          ArrowCardWidget(
+                            bgColor: Colors.lightBlue.shade200,
+                            size: size,
+                            ratio: 8,
+                            circularRatio: 25,
                           ),
                           SizedBox(
                               width: MediaQuery.of(context).size.width * 0.05),

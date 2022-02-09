@@ -8,6 +8,7 @@ class ThemeYellow {
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
       color: Colors.transparent,
+      elevation: 0,
     ),
     bottomAppBarColor: Colors.white12,
     textTheme: const TextTheme(
