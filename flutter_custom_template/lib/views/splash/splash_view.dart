@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_template/utils/network.dart';
 import 'package:flutter_custom_template/views/splash/widgets/app_bar_actions.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_custom_template/widgets/general_widgets/custom_text_widget.dart';
+import 'package:flutter_custom_template/widgets/general_widgets/loader_widget.dart';
+import 'package:flutter_custom_template/widgets/general_widgets/shor_image_network.dart';
+
 import 'package:stacked/stacked.dart';
 import 'splash_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,69 +33,38 @@ class SplashView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leadingWidth: 56,
-            leading: Row(
-              children: [
-                Container(
-                  width: 28,
-                  height: 30,
-                  color: Colors.green,
-                ),
-                Container(
-                  width: 28,
-                  height: 30,
-                  color: Colors.red,
-                ),
-              ],
-            ),
           ),
 
           /// View Models export [Body]
-          body: Stack(
-            children: [
-              SvgPicture.asset(
-                'asset/images/log.svg',
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height,
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.amberAccent,
-                          content: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Icon(Icons.favorite),
-                              Text(
-                                'Like',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                          action: SnackBarAction(
-                            label: 'FCS IBB',
-                            textColor: Colors.black,
-                            onPressed: () {},
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      child: const Text('Snack'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          body: const CustomSplash(),
         );
       },
       viewModelBuilder: () => SplashViewModel(),
+    );
+  }
+}
+
+class CustomSplash extends StatelessWidget {
+  const CustomSplash({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          /// Splash Screen Title [CustomTextWidget]
+          CustomTextWidget(label: AppLocalizations.of(context).loading_label),
+          ImageNetwork(
+            link: SplashScreenNetwork().splashScrenNetwork,
+            size: 200,
+            fit: BoxFit.fill,
+          ),
+          const CustomLoader(
+            color: Colors.white,
+            strokeWidth: 5,
+          ),
+        ],
+      ),
     );
   }
 }
